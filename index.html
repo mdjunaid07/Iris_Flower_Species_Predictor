@@ -1,0 +1,143 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Iris Flower Predictor</title>
+  <style>
+    body {
+      background: #f4f6f8;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #1d3557;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🌸 Iris Flower Predictor</h2>
+
+    <input id="sepal_length" placeholder="Sepal Length">
+    <input id="sepal_width" placeholder="Sepal Width">
+    <input id="petal_length" placeholder="Petal Length">
+    <input id="petal_width" placeholder="Petal Width">
+
+    <button onclick="predict()">Predict</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function predict() {
+      const payload = {
+        sepal_length: parseFloat(document.getElementById("sepal_length").value),
+        sepal_width: parseFloat(document.getElementById("sepal_width").value),
+        petal_length: parseFloat(document.getElementById("petal_length").value),
+        petal_width: parseFloat(document.getElementById("petal_width").value)
+      };
+
+      const response = await fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      document.getElementById("result").innerText = "🌿 Predicted Species: " + result.prediction;
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+<!-- index.html -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Iris Predictor</title>
+</head>
+<body>
+  <h2>Predict Iris Flower Species</h2>
+  <input id="sepal_length" placeholder="Sepal Length">
+  <input id="sepal_width" placeholder="Sepal Width">
+  <input id="petal_length" placeholder="Petal Length">
+  <input id="petal_width" placeholder="Petal Width">
+  <button onclick="predict()">Predict</button>
+
+  <h3 id="result"></h3>
+<script>
+  async function predict() {
+    const payload = {
+      sepal_length: parseFloat(document.getElementById("sepal_length").value),
+      sepal_width: parseFloat(document.getElementById("sepal_width").value),
+      petal_length: parseFloat(document.getElementById("petal_length").value),
+      petal_width: parseFloat(document.getElementById("petal_width").value)
+    };
+
+    const response = await fetch('http://127.0.0.1:5000/predict', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+    document.getElementById("result").innerText = "Predicted Species: " + result.prediction;
+  }
+</script>
+
+</body>
+</html>--> 
